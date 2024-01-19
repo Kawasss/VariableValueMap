@@ -1,0 +1,9 @@
+myGlobalVar1: 1.000000
+myGroup1: 
+	myGroupVar1: "myGroupValue1"
+	myGroup2: 
+		myGroupVar1: "myGroupValue1"
+		myGroupVar2: 3
+	myGroupVar2: "myGroupValue2"
+	myGroupVar3: 1
+myGlobalVar2: "myGlobalValue1"
