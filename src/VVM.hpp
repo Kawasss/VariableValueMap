@@ -25,6 +25,7 @@ namespace VVM
 				else if constexpr (std::is_same<int,    T>::value) return std::stoi(value);
 				else if constexpr (std::is_same<double, T>::value) return std::stod(value);
 				else if constexpr (std::is_same<char,   T>::value) return value[0];
+				else if constexpr (std::is_same<bool,   T>::value) return value[0] == '1';
 				else return 0;
 			}
 		};
