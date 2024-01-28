@@ -128,9 +128,10 @@ inline std::vector<std::string> LexFile(const std::string& input)
 
 inline std::vector<VVM::Group> ParseTokens(const std::vector<std::string>& tokens)
 {
-	std::vector<VVM::Group> ret = { { "global" }}; // the first group is the global one
+	std::vector<VVM::Group> ret = { { "global" } }; // the first group is the global one
 	std::unordered_map<size_t, std::string> groupHierarchy;
-	
+	std::unordered_map<size_t, size_t> groupLevels = { { 0, 0 } };
+
 	VVM::Group::Variable currentVar;
 	bool readingLValue = true;
 	size_t indentLevel = 0;
@@ -150,13 +151,14 @@ inline std::vector<VVM::Group> ParseTokens(const std::vector<std::string>& token
 				std::string prefix = indentLevel == 0 ? "" : groupHierarchy[indentLevel - 1] + '.';
 				groupHierarchy[indentLevel] = prefix + tokens[i - 1];
 				ret.push_back({ prefix + tokens[i - 1] });
+				groupLevels[indentLevel + 1] = ret.size() - 1;
 				currentVar = {};
 				indentLevel = 0;
 				i++; // skip over the \n character so that the other case doesnt get invoked next cycle
 				continue;
 			}
 			case '\n':
-				ret[indentLevel].variables.push_back(currentVar);
+				ret[groupLevels[indentLevel]].variables.push_back(currentVar);
 				indentLevel = 0;
 				currentVar = {};
 				readingLValue = true;
@@ -168,8 +170,6 @@ inline std::vector<VVM::Group> ParseTokens(const std::vector<std::string>& token
 		if (readingLValue)
 		{
 			currentVar.name = tokens[i];
-			if (indentLevel == 0)
-				continue;
 		}
 		else
 		{
@@ -205,4 +205,9 @@ VVMResult VVM::ReadFromFile(const std::string& path, std::vector<Group>& groups)
 	std::vector<std::string> tokens = LexFile(source);
 	groups = ParseTokens(tokens);
 	return VVM_SUCCESS;
+}
+
+void VVM::Reset()
+{
+	nodes.clear();
 }

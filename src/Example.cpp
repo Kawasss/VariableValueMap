@@ -3,6 +3,8 @@
 
 int main()
 {
+	std::string myGlobalVar2 = "myGlobalValue1";
+
 	VVM::AddVariable("myGlobalVar1", 1.0f);
 
 	VVM::PushGroup("myGroup1");
@@ -17,7 +19,8 @@ int main()
 	VVM::AddVariable("myGroupVar3", 1);
 	VVM::PopGroup();
 
-	VVM::AddVariable("myGlobalVar2", "myGlobalValue1");
+	//VVM::AddVariable("myGlobalVar2", "myGlobalValue1");
+	VVM_ADD_VARIABLE(myGlobalVar2);
 
 	if (VVM::WriteToFile("test.vvm") != VVM_SUCCESS)
 		return 1;

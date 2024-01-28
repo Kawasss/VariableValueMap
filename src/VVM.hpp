@@ -9,6 +9,10 @@ enum VVMResult
 	VVM_FILE_NOT_FOUND,
 };
 
+#ifndef VVM_NO_MACROS
+#define VVM_ADD_VARIABLE(variable) VVM::AddVariable(#variable, variable##)
+#endif
+
 namespace VVM
 {
 	struct Group
@@ -50,4 +54,6 @@ namespace VVM
 
 	inline extern VVMResult WriteToFile(const std::string& path);
 	inline extern VVMResult ReadFromFile(const std::string& path, std::vector<Group>& groups);
+
+	inline extern void Reset();
 }
