@@ -38,7 +38,7 @@ This sample also uses the function ```VVM::AddVariable```, which is (of course) 
 template<typename T> void AddVariable(const std::string& name, T value);
 ```
 
-There is also a macro avaible to simplify adding existing variables, to remove every macro simply define ```VVM_NO_MACROS```.
+There is also a macro available to simplify adding existing variables, to remove every macro simply define ```VVM_NO_MACROS```.
 
 ```
 #define VVM_ADD_VARIABLE(variable) VVM::AddVariable(#variable, variable##)
